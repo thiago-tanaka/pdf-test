@@ -1,5 +1,6 @@
 <?php
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $items = range(1, 21);
+    $itemChunks = array_chunk($items, 4);
+    return PDF::loadView('pdf', compact('itemChunks'))->download('test.pdf');
 });
